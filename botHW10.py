@@ -1,12 +1,12 @@
 from collections import defaultdict, UserDict
 
 
-phone_book = defaultdict(list)
-
-
 class Field:
     def __init__(self, value):
         self.value = value
+
+    def __str__(self) -> str:
+        return str(self.value)
 
 
 class Name(Field):
@@ -38,7 +38,10 @@ class Record:
 class AddressBook(UserDict):
 
     def add_record(self, record: Record):
-        self.data[record.name.value].append(record)
+        self.data[record.name.value] = str(record)
+
+
+phone_book = AddressBook()
 
 
 def input_error(func):
@@ -80,9 +83,10 @@ def exit(*args):
 @input_error
 def add(*args):
     list_of_param = args[0].split()
-    name = list_of_param[0]
-    phone = list_of_param[1]
-    phone_book[name].append(phone)
+    name = Name(list_of_param[0])
+    phone = Phone(list_of_param[1])
+    rec = Record(name, phone)
+    phone_book.add_record(rec)
 
     return f"I add {name} {phone} in phone_book!"
 
@@ -158,7 +162,7 @@ def main():
         pars = parser(user_input)
         command, data = command_handler(pars)
         print(command(data))
-
+        print(phone_book)
         if command == exit:
             break
 
