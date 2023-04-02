@@ -40,9 +40,6 @@ class AddressBook(UserDict):
     def add_record(self, record: Record):
         self.data[record.name.value] = str(record)
 
-    def change_record(self, record: Record):
-        self.data.update({record.name.value: record})
-
 
 phone_book = AddressBook()
 
@@ -97,10 +94,9 @@ def add(*args):
 @input_error
 def change(*args):
     list_of_param = args[0].split()
-    name = Name(list_of_param[0])
-    phone = Phone(list_of_param[1])
-    rec = Record(name, phone)
-    phone_book.change_record(rec)
+    name = list_of_param[0]
+    phone = list_of_param[1]
+    phone_book[name] = phone
 
     return f"I change number for {name} on {phone}"
 
