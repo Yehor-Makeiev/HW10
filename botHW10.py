@@ -1,48 +1,7 @@
-from collections import defaultdict, UserDict
-
-
-class Field:
-    def __init__(self, value):
-        self.value = value
-
-    def __str__(self) -> str:
-        return str(self.value)
-
-
-class Name(Field):
-    pass
-
-
-class Phone(Field):
-    pass
-
-
-# Клас Record, який відповідає за логіку додавання/видалення/редагування необов'язкових полів та зберігання обов'язкового поля Name.
-class Record:
-
-    def __init__(self, name: Name, phone: Phone = None):
-        self.name = name
-        self.phones = []
-
-    def add_phone(self, phone: Phone):
-        self.phones.append(phone)
-
-    def remove_phone(self, phone: Phone):
-        self.phones.remove(phone)
-
-    def change_phone(self, old_phone: Phone, new_phone: Phone):
-        index = self.phones.index(old_phone)
-        self.phones[index] = new_phone
-
-
-class AddressBook(UserDict):
-
-    def add_record(self, record: Record):
-        self.data[record.name.value] = str(record)
+from classcomands import Field, Name, Phone, Record, AddressBook
 
 
 phone_book = AddressBook()
-
 
 def input_error(func):
     def inner(*args):
@@ -63,7 +22,7 @@ def help(*args):
 
 2. If you want add name and number - enter: 'add Name number' for example 'add Bill +380997654321'
 
-3. If you want change number - enter: 'change Existing_Name new_nuber' for exemple 'change Bill +380997654321'
+3. If you want change number - enter: 'change Existing_Name old_number new_nuber' for exemple 'change Bill +380997654321'
 
 4. If you want see phone number for name - enter 'phone Existing_Name' for exemple 'phone Bill'
 
@@ -94,10 +53,11 @@ def add(*args):
 @input_error
 def change(*args):
     list_of_param = args[0].split()
-    name = list_of_param[0]
-    phone = list_of_param[1]
-    phone_book[name] = phone
-
+    name = Name(list_of_param[0])
+    old_phone = Phone(list_of_param[1])
+    new_phone = Phone(list_of_param[2])
+    phone_book[name] = phone_book[name].change_phone(old_phone, new_phone)
+   
     return f"I change number for {name} on {phone}"
 
 
@@ -114,7 +74,7 @@ def phone(*args):
 def show_all(*args):
     result = []
     for name, phones in phone_book.items():
-        result.append(f"{name}: {''.join(phones)}")
+        result.append(f"{name}: {''.join(str(phones))}")
     return "\n".join(result)
 
 
@@ -139,7 +99,11 @@ def parser(text: str):
             if token.lower() in COMMANDS.values():
                 name = tokens[i + 1]
                 phone = tokens[i + 2]
-                result_str = f"{token.lower()} {name} {phone}"
+                try:
+                    new_phone = tokens[i + 3]
+                    result_str = f"{token.lower()} {name} {phone} {new_phone}"
+                except Exception as p:
+                    result_str = f"{token.lower()} {name} {phone}"
     else:
         result_str = text.lower()
     return result_str
