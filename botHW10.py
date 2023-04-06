@@ -45,9 +45,9 @@ def add(*args):
     list_of_param = args[0].split()
     name = Name(list_of_param[0])
     phone = Phone(list_of_param[1])
-    rec = Record(phone)
+    rec = phone_book.get(args[0])
     if rec:
-        return phone_book.add_phone(rec)
+        return rec.add_phone(phone)
 
     #return f"I add {name} {phone} in phone_book!"
 
