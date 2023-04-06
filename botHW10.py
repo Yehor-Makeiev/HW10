@@ -57,9 +57,8 @@ def change(*args):
     name = Name(list_of_param[0])
     old_phone = Phone(list_of_param[1])
     new_phone = Phone(list_of_param[2])
-    phone_book[name] = phone_book[name].change_phone(old_phone, new_phone)
-   
-    return f"I change number for {name} on {phone}"
+    rec = Record(name)
+    return rec.change_phone(old_phone, new_phone)  
 
 
 @input_error

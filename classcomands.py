@@ -28,7 +28,7 @@ class Record:
     def remove_phone(self, phone: Phone):
         self.phones.remove(phone)
    
-    def change_phone(self, old_phone: Phone, new_phone: Phone):
+    def change_phone(self, old_phone:Phone, new_phone:Phone):
         index = self.phones.index(old_phone)
         self.phones[index] = new_phone
          
@@ -39,6 +39,5 @@ class AddressBook(UserDict):
 
     def add_record(self, record: Record):
         self.data[record.name.value] = record
-
 
 
