@@ -57,8 +57,10 @@ def change(*args):
     name = Name(list_of_param[0])
     old_phone = Phone(list_of_param[1])
     new_phone = Phone(list_of_param[2])
-    rec = Record(name)
-    return rec.change_phone(old_phone, new_phone)  
+    rec = phone_book.get(name.value)
+    if rec:
+        return rec.change_phone(old_phone, new_phone)
+    return f'Phone book has no contact {name}'  
 
 
 @input_error

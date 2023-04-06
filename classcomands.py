@@ -29,8 +29,11 @@ class Record:
         self.phones.remove(phone)
    
     def change_phone(self, old_phone:Phone, new_phone:Phone):
-        index = self.phones.index(old_phone)
-        self.phones[index] = new_phone
+        for i, p in enumerate(self.phones):
+            if p.value == old_phone.value:
+                self.phones[i] = new_phone
+                return f'Pone {old_phone} change to {new_phone}'
+        return f'Contact has no phone {old_phone}'
          
     
 
