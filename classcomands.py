@@ -8,11 +8,13 @@ class Field:
 
 
 class Name(Field):
-    pass
+    def __str__(self) -> str:
+        return str(self.value)
 
 
 class Phone(Field):
-    pass
+    def __str__(self) -> str:
+        return str(self.value)
 
 
 
@@ -24,18 +26,18 @@ class Record:
 
     def add_phone(self, phone: Phone):
         self.phones.append(phone)
-
-    def remove_phone(self, phone: Phone):
-        self.phones.remove(phone)
-   
+        
     def change_phone(self, old_phone:Phone, new_phone:Phone):
         for i, p in enumerate(self.phones):
             if p.value == old_phone.value:
                 self.phones[i] = new_phone
-                return f'Pone {old_phone} change to {new_phone}'
+                return f'Phone {old_phone} change to {new_phone}'
         return f'Contact has no phone {old_phone}'
          
-    
+    def delete_phone(self, phone:Phone):
+        for p in self.phones:
+            if p == phone:
+                self.phones.remove(phone)
 
 
 class AddressBook(UserDict):

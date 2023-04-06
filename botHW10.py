@@ -45,12 +45,13 @@ def add(*args):
     list_of_param = args[0].split()
     name = Name(list_of_param[0])
     phone = Phone(list_of_param[1])
-    rec = Record(name, phone)
-    phone_book.add_record(rec)
+    rec = Record(phone)
+    if rec:
+        return phone_book.add_phone(rec)
 
-    return f"I add {name} {phone} in phone_book!"
+    #return f"I add {name} {phone} in phone_book!"
 
-# problem in change
+
 @input_error
 def change(*args):
     list_of_param = args[0].split()
@@ -73,6 +74,17 @@ def phone(*args):
     return "".join(phone_book[name])
 
 
+@input_error
+def delete(*args):
+    list_of_param = args[0].split()
+    name = Name(list_of_param[0])
+    phone = Phone(list_of_param[1])
+    rec = phone_book.get(name.value)
+    if rec:
+        return rec.delete_phone(phone)
+    return f'Phone book has no contact {name}'  
+
+
 def show_all(*args):
     result = []
     for name, phones in phone_book.items():
@@ -89,7 +101,8 @@ COMMANDS = {help: "help",
             change: "change",
             phone: "phone",
             hello: "hello",
-            show_all: "show all"
+            show_all: "show all",
+            delete: "delete"
             }
 
 
