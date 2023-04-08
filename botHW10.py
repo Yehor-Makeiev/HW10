@@ -45,11 +45,11 @@ def add(*args):
     list_of_param = args[0].split()
     name = Name(list_of_param[0])
     phone = Phone(list_of_param[1])
-    rec = phone_book.get(args[0])
+    rec = Record(name, phone)
     if rec:
-        return rec.add_phone(phone)
+        phone_book.add_record(rec)
 
-    #return f"I add {name} {phone} in phone_book!"
+    return f"I add {name} {phone} in phone_book!"
 
 
 @input_error
@@ -67,11 +67,12 @@ def change(*args):
 @input_error
 def phone(*args):
     list_of_param = args[0].split()
-    name = str(list_of_param[0]).title()
-    if name not in phone_book.keys():
+    name = Name(str(list_of_param[0]).title())
+    if name.value not in phone_book.keys():
         raise KeyError()
-
-    return "".join(phone_book[name])
+    record = phone_book[name.value]
+    phones = ", ".join([str(phone) for phone in record.phones])
+    return phones
 
 
 @input_error

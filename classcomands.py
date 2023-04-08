@@ -35,10 +35,17 @@ class Record:
         return f'Contact has no phone {old_phone}'
          
     def delete_phone(self, phone:Phone):
-        for p in self.phones:
-            if p == phone:
-                self.phones.remove(phone)
-
+        for i, p in enumerate(self.phones):
+            if p.value == phone.value:
+                self.phones.pop(i)
+                return f'Phone {phone} deleted'
+        # for p in self.phones:
+        #     if p == phone:
+        #         self.phones.remove(phone)
+    
+    def __str__(self) -> str:
+        phones = ", ".join([str(phone) for phone in self.phones])
+        return f"{phones}"
 
 class AddressBook(UserDict):
 
