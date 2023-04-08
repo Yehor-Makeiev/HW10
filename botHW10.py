@@ -45,11 +45,14 @@ def add(*args):
     list_of_param = args[0].split()
     name = Name(list_of_param[0])
     phone = Phone(list_of_param[1])
-    rec = Record(name, phone)
-    if rec:
+    if name.value in phone_book.keys():
+        record = phone_book[name.value]
+        record.add_phone(phone)
+        return f"I add {phone} to {name} in phone_book!"
+    else:
+        rec = Record(name, phone)
         phone_book.add_record(rec)
-
-    return f"I add {name} {phone} in phone_book!"
+        return f"I add {name} {phone} in phone_book!"
 
 
 @input_error
@@ -143,7 +146,6 @@ def main():
         pars = parser(user_input)
         command, data = command_handler(pars)
         print(command(data))
-        print(phone_book)
         if command == exit:
             break
 
