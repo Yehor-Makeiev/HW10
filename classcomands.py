@@ -39,9 +39,6 @@ class Record:
             if p.value == phone.value:
                 self.phones.pop(i)
                 return f'Phone {phone} deleted'
-        # for p in self.phones:
-        #     if p == phone:
-        #         self.phones.remove(phone)
     
     def __str__(self) -> str:
         phones = ", ".join([str(phone) for phone in self.phones])
